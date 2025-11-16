@@ -10,9 +10,10 @@ export const colors = {
   background: '#F5FAFB',
   
   // Card & Surface
-  card: '#FFFFFF',
+  // Use a very light off-white for surfaces to avoid harsh pure white
+  card: '#F8FAFC',
   cardSubtle: '#F5FAFB',
-  surface: '#FFFFFF',
+  surface: '#F8FAFC',
   
   // Text
   textPrimary: '#1A1D1F',

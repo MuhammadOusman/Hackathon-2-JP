@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Text, View, Platform, StyleSheet} from 'react-native';
+import {Text, View, Platform, StyleSheet, StatusBar} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -14,6 +14,11 @@ import AppointmentsListScreen from '../screens/AppointmentsListScreen';
 import BookAppointmentScreen from '../screens/BookAppointmentScreen';
 import MedicalRecordsScreen from '../screens/MedicalRecordsScreen';
 import ProfileScreen from '../screens/ProfileScreen';
+import EditProfileScreen from '../screens/EditProfileScreen';
+import NotificationsScreen from '../screens/NotificationsScreen';
+import PrivacyScreen from '../screens/PrivacyScreen';
+import TermsScreen from '../screens/TermsScreen';
+import PrivacyPolicyScreen from '../screens/PrivacyPolicyScreen';
 import HelpScreen from '../screens/HelpScreen';
 
 import {colors} from '../theme';
@@ -209,6 +214,10 @@ export default function Navigation() {
 
   return (
     <NavigationContainer>
+      <StatusBar
+        backgroundColor={colors.card}
+        barStyle={Platform.OS === 'ios' ? 'dark-content' : 'dark-content'}
+      />
       <Stack.Navigator
         screenOptions={{
           headerShown: false,
@@ -227,6 +236,47 @@ export default function Navigation() {
               options={{
                 headerShown: true,
                 title: 'Book Appointment',
+                headerStyle: {backgroundColor: colors.card},
+                headerTintColor: colors.textPrimary,
+              }}
+            />
+            <Stack.Screen
+              name="EditProfile"
+              component={EditProfileScreen}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="Notifications"
+              component={NotificationsScreen}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="Privacy"
+              component={PrivacyScreen}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="Terms"
+              component={TermsScreen}
+              options={{
+                headerShown: true,
+                title: 'Terms & Conditions',
+                headerStyle: {backgroundColor: colors.card},
+                headerTintColor: colors.textPrimary,
+              }}
+            />
+            <Stack.Screen
+              name="PrivacyPolicy"
+              component={PrivacyPolicyScreen}
+              options={{
+                headerShown: true,
+                title: 'Privacy Policy',
                 headerStyle: {backgroundColor: colors.card},
                 headerTintColor: colors.textPrimary,
               }}
