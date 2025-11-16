@@ -7,7 +7,9 @@ import {
   TextInput,
   Alert,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import Card from '../components/Card';
 import Button from '../components/Button';
 import Avatar from '../components/Avatar';
@@ -17,8 +19,10 @@ import {colors, typography, spacing, borderRadius} from '../theme';
 const BookAppointmentScreen = ({navigation}) => {
   const [providers, setProviders] = useState([]);
   const [selectedProvider, setSelectedProvider] = useState(null);
-  const [date, setDate] = useState('');
-  const [time, setTime] = useState('');
+  const [date, setDate] = useState(new Date());
+  const [time, setTime] = useState(new Date());
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [showTimePicker, setShowTimePicker] = useState(false);
   const [reason, setReason] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -35,20 +39,54 @@ const BookAppointmentScreen = ({navigation}) => {
     }
   };
 
+  const onDateChange = (event, selectedDate) => {
+    setShowDatePicker(Platform.OS === 'ios');
+    if (selectedDate) {
+      setDate(selectedDate);
+    }
+  };
+
+  const onTimeChange = (event, selectedTime) => {
+    setShowTimePicker(Platform.OS === 'ios');
+    if (selectedTime) {
+      setTime(selectedTime);
+    }
+  };
+
+  const formatDate = (date) => {
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
+  };
+
+  const formatTime = (time) => {
+    return time.toLocaleTimeString('en-US', {
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  };
+
   const handleBookAppointment = async () => {
-    if (!selectedProvider || !date || !time) {
-      Alert.alert('Error', 'Please select provider, date and time');
+    if (!selectedProvider) {
+      Alert.alert('Error', 'Please select a doctor');
       return;
     }
 
     setLoading(true);
     try {
-      const startTime = new Date(`${date}T${time}:00`).toISOString();
+      // Combine date and time
+      const appointmentDate = new Date(date);
+      appointmentDate.setHours(time.getHours());
+      appointmentDate.setMinutes(time.getMinutes());
+      
+      const startTime = appointmentDate.toISOString();
       await appointmentService.create(selectedProvider._id, startTime, reason);
       Alert.alert('Success', 'Appointment booked successfully!', [
         {
           text: 'OK',
-          onPress: () => navigation.navigate('AppointmentsList'),
+          onPress: () => navigation.goBack(),
         },
       ]);
     } catch (error) {
@@ -84,25 +122,41 @@ const BookAppointmentScreen = ({navigation}) => {
       <Text style={styles.sectionTitle}>Date & Time</Text>
       <Card>
         <View style={styles.inputContainer}>
-          <Text style={styles.label}>Date (YYYY-MM-DD)</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="2024-11-25"
-            value={date}
-            onChangeText={setDate}
-            placeholderTextColor={colors.textMuted}
-          />
+          <Text style={styles.label}>Select Date</Text>
+          <TouchableOpacity
+            style={styles.dateTimeButton}
+            onPress={() => setShowDatePicker(true)}>
+            <Text style={styles.dateTimeIcon}>📅</Text>
+            <Text style={styles.dateTimeText}>{formatDate(date)}</Text>
+          </TouchableOpacity>
+          {showDatePicker && (
+            <DateTimePicker
+              value={date}
+              mode="date"
+              display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+              onChange={onDateChange}
+              minimumDate={new Date()}
+            />
+          )}
         </View>
 
         <View style={styles.inputContainer}>
-          <Text style={styles.label}>Time (HH:MM 24-hour)</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="14:30"
-            value={time}
-            onChangeText={setTime}
-            placeholderTextColor={colors.textMuted}
-          />
+          <Text style={styles.label}>Select Time</Text>
+          <TouchableOpacity
+            style={styles.dateTimeButton}
+            onPress={() => setShowTimePicker(true)}>
+            <Text style={styles.dateTimeIcon}>🕐</Text>
+            <Text style={styles.dateTimeText}>{formatTime(time)}</Text>
+          </TouchableOpacity>
+          {showTimePicker && (
+            <DateTimePicker
+              value={time}
+              mode="time"
+              display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+              onChange={onTimeChange}
+              is24Hour={false}
+            />
+          )}
         </View>
 
         <View style={styles.inputContainer}>
@@ -196,6 +250,24 @@ const styles = StyleSheet.create({
   textArea: {
     height: 100,
     textAlignVertical: 'top',
+  },
+  dateTimeButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: colors.border,
+    borderRadius: borderRadius.md,
+    padding: spacing.md,
+    backgroundColor: colors.background,
+  },
+  dateTimeIcon: {
+    fontSize: 24,
+    marginRight: spacing.md,
+  },
+  dateTimeText: {
+    ...typography.body,
+    color: colors.textPrimary,
+    flex: 1,
   },
   bookButton: {
     marginTop: spacing.lg,

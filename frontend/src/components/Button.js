@@ -4,22 +4,10 @@ import {
   Text,
   StyleSheet,
   ActivityIndicator,
-  ViewStyle,
-  TextStyle,
 } from 'react-native';
-import {colors, typography, borderRadius, spacing} from '../theme';
+import {spacing} from '../theme';
 
-interface ButtonProps {
-  title: string;
-  onPress: () => void;
-  variant?: 'primary' | 'secondary' | 'outline' | 'danger';
-  size?: 'small' | 'medium' | 'large';
-  loading?: boolean;
-  disabled?: boolean;
-  style?: ViewStyle;
-}
-
-const Button: React.FC<ButtonProps> = ({
+const Button = ({
   title,
   onPress,
   variant = 'primary',
@@ -29,25 +17,25 @@ const Button: React.FC<ButtonProps> = ({
   style,
 }) => {
   const getBackgroundColor = () => {
-    if (disabled) return colors.border;
+    if (disabled) return '#CBD5E1';
     switch (variant) {
       case 'primary':
-        return colors.primary;
+        return '#06B6D4';
       case 'secondary':
-        return colors.primaryLight;
+        return '#E0F2FE';
       case 'danger':
-        return colors.danger;
+        return '#EF4444';
       case 'outline':
         return 'transparent';
       default:
-        return colors.primary;
+        return '#06B6D4';
     }
   };
 
   const getTextColor = () => {
-    if (disabled) return colors.textMuted;
-    if (variant === 'outline') return colors.primary;
-    if (variant === 'secondary') return colors.textPrimary;
+    if (disabled) return '#94A3B8';
+    if (variant === 'outline') return '#06B6D4';
+    if (variant === 'secondary') return '#0F172A';
     return '#FFFFFF';
   };
 
@@ -68,8 +56,10 @@ const Button: React.FC<ButtonProps> = ({
         styles.button,
         {
           backgroundColor: getBackgroundColor(),
-          borderColor: variant === 'outline' ? colors.primary : 'transparent',
-          borderWidth: variant === 'outline' ? 1.5 : 0,
+          borderColor: variant === 'outline' ? '#06B6D4' : 'transparent',
+          borderWidth: variant === 'outline' ? 2 : 0,
+          shadowOpacity: variant === 'outline' ? 0 : 0.15,
+          elevation: variant === 'outline' ? 0 : 4,
         },
         getPadding(),
         style,
@@ -97,12 +87,20 @@ const Button: React.FC<ButtonProps> = ({
 
 const styles = StyleSheet.create({
   button: {
-    borderRadius: borderRadius.md,
+    borderRadius: 14,
     alignItems: 'center',
     justifyContent: 'center',
+    minHeight: 52,
+    shadowColor: '#06B6D4',
+    shadowOffset: {width: 0, height: 4},
+    shadowOpacity: 0.15,
+    shadowRadius: 12,
+    elevation: 4,
   },
   text: {
-    ...typography.bodyBold,
+    fontSize: 16,
+    fontWeight: '700',
+    letterSpacing: 0.3,
   },
 });
 

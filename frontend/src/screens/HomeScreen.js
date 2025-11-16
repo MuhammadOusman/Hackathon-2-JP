@@ -118,27 +118,30 @@ const HomeScreen = ({navigation}) => {
       <View style={styles.quickActions}>
         <TouchableOpacity
           style={styles.actionButton}
-          onPress={() =>
-            navigation.navigate('Appointments', {
-              screen: 'BookAppointment',
-            })
-          }>
+          onPress={() => navigation.navigate('BookAppointment')}>
           <Text style={styles.actionIcon}>📅</Text>
-          <Text style={styles.actionText}>Book Visit</Text>
+          <Text style={styles.actionText}>Schedule</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.actionButton}
+          onPress={() => navigation.navigate('Appointments')}>
+          <Text style={styles.actionIcon}>🩺</Text>
+          <Text style={styles.actionText}>Checkup</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.actionButton}
           onPress={() => navigation.navigate('Records')}>
-          <Text style={styles.actionIcon}>📄</Text>
-          <Text style={styles.actionText}>My Records</Text>
+          <Text style={styles.actionIcon}>�</Text>
+          <Text style={styles.actionText}>Messages</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.actionButton}
-          onPress={() => navigation.navigate('Medications')}>
-          <Text style={styles.actionIcon}>💊</Text>
-          <Text style={styles.actionText}>Medications</Text>
+          onPress={() => navigation.navigate('Help')}>
+          <Text style={styles.actionIcon}>❓</Text>
+          <Text style={styles.actionText}>FAQs</Text>
         </TouchableOpacity>
       </View>
 

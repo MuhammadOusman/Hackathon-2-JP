@@ -8,6 +8,7 @@ import {
   Platform,
   ScrollView,
   Alert,
+  TouchableOpacity,
 } from 'react-native';
 import Button from '../components/Button';
 import {authService} from '../services/api';
@@ -40,62 +41,79 @@ const RegisterScreen = ({navigation}) => {
     <KeyboardAvoidingView
       style={styles.container}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-      <ScrollView contentContainerStyle={styles.scrollContent}>
+      <ScrollView 
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}>
+        
         <View style={styles.header}>
-          <Text style={styles.title}>Create Account</Text>
-          <Text style={styles.subtitle}>Start your health journey</Text>
+          <View style={styles.iconContainer}>
+            <Text style={styles.icon}>🏥</Text>
+          </View>
+          <Text style={styles.title}>Create Your Account</Text>
+          <Text style={styles.subtitle}>Sign up to get started</Text>
         </View>
 
         <View style={styles.form}>
           <View style={styles.inputContainer}>
             <Text style={styles.label}>Full Name</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Enter your name"
-              value={name}
-              onChangeText={setName}
-              placeholderTextColor={colors.textMuted}
-            />
+            <View style={styles.inputWrapper}>
+              <Text style={styles.inputIcon}>👤</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="Enter your full name"
+                value={name}
+                onChangeText={setName}
+                placeholderTextColor={colors.textMuted}
+              />
+            </View>
           </View>
 
           <View style={styles.inputContainer}>
             <Text style={styles.label}>Email</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Enter your email"
-              value={email}
-              onChangeText={setEmail}
-              keyboardType="email-address"
-              autoCapitalize="none"
-              placeholderTextColor={colors.textMuted}
-            />
+            <View style={styles.inputWrapper}>
+              <Text style={styles.inputIcon}>✉️</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="yourmail@mail.com"
+                value={email}
+                onChangeText={setEmail}
+                keyboardType="email-address"
+                autoCapitalize="none"
+                placeholderTextColor={colors.textMuted}
+              />
+            </View>
           </View>
 
           <View style={styles.inputContainer}>
             <Text style={styles.label}>Password</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Enter your password"
-              value={password}
-              onChangeText={setPassword}
-              secureTextEntry
-              placeholderTextColor={colors.textMuted}
-            />
+            <View style={styles.inputWrapper}>
+              <Text style={styles.inputIcon}>🔒</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="Create a password"
+                value={password}
+                onChangeText={setPassword}
+                secureTextEntry
+                placeholderTextColor={colors.textMuted}
+              />
+            </View>
           </View>
 
           <Button
             title="Sign Up"
             onPress={handleRegister}
             loading={loading}
-            style={styles.button}
+            style={styles.signupButton}
           />
 
-          <Button
-            title="Already have an account? Login"
+          <TouchableOpacity
             onPress={() => navigation.navigate('Login')}
-            variant="outline"
-            style={styles.button}
-          />
+            style={styles.loginLink}>
+            <Text style={styles.loginText}>
+              Already have an account?{' '}
+              <Text style={styles.loginTextBold}>Sign In</Text>
+            </Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
@@ -110,22 +128,37 @@ const styles = StyleSheet.create({
   scrollContent: {
     flexGrow: 1,
     justifyContent: 'center',
-    padding: spacing.xl,
   },
   header: {
-    marginBottom: spacing.xxxl,
+    padding: spacing.xl,
+    paddingTop: 60,
+    alignItems: 'center',
+  },
+  iconContainer: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    backgroundColor: colors.primaryLight + '20',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: spacing.lg,
+  },
+  icon: {
+    fontSize: 40,
   },
   title: {
     ...typography.h1,
     color: colors.textPrimary,
     marginBottom: spacing.sm,
+    textAlign: 'center',
   },
   subtitle: {
     ...typography.body,
     color: colors.textSecondary,
+    textAlign: 'center',
   },
   form: {
-    width: '100%',
+    padding: spacing.xl,
   },
   inputContainer: {
     marginBottom: spacing.lg,
@@ -135,17 +168,39 @@ const styles = StyleSheet.create({
     color: colors.textPrimary,
     marginBottom: spacing.sm,
   },
-  input: {
+  inputWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
     borderWidth: 1,
     borderColor: colors.border,
     borderRadius: borderRadius.md,
+    backgroundColor: colors.card,
+    paddingHorizontal: spacing.md,
+  },
+  inputIcon: {
+    fontSize: 20,
+    marginRight: spacing.sm,
+  },
+  input: {
+    flex: 1,
     padding: spacing.md,
     ...typography.body,
     color: colors.textPrimary,
-    backgroundColor: colors.card,
   },
-  button: {
-    marginTop: spacing.md,
+  signupButton: {
+    marginTop: spacing.lg,
+  },
+  loginLink: {
+    marginTop: spacing.xl,
+    alignItems: 'center',
+  },
+  loginText: {
+    ...typography.body,
+    color: colors.textSecondary,
+  },
+  loginTextBold: {
+    ...typography.bodyBold,
+    color: colors.primary,
   },
 });
 

@@ -12,7 +12,6 @@ import RegisterScreen from '../screens/RegisterScreen';
 import HomeScreen from '../screens/HomeScreen';
 import AppointmentsListScreen from '../screens/AppointmentsListScreen';
 import BookAppointmentScreen from '../screens/BookAppointmentScreen';
-import MedicationsScreen from '../screens/MedicationsScreen';
 import MedicalRecordsScreen from '../screens/MedicalRecordsScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import HelpScreen from '../screens/HelpScreen';
@@ -58,14 +57,6 @@ function MainTabs() {
         }}
       />
       <Tab.Screen
-        name="Medications"
-        component={MedicationsScreen}
-        options={{
-          tabBarLabel: 'Medications',
-          tabBarIcon: ({color}) => <Text style={{fontSize: 24}}>💊</Text>,
-        }}
-      />
-      <Tab.Screen
         name="Records"
         component={MedicalRecordsScreen}
         options={{
@@ -91,28 +82,32 @@ export default function Navigation() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    checkAuth();
-    
+    // Initial auth check and hide splash after 2 seconds
+    const initializeApp = async () => {
+      try {
+        const token = await AsyncStorage.getItem('token');
+        setIsAuthenticated(!!token);
+      } catch (error) {
+        console.error('Auth check error:', error);
+      } finally {
+        setTimeout(() => setIsLoading(false), 2000);
+      }
+    };
+
+    initializeApp();
+
     // Check auth periodically to update navigation
-    const interval = setInterval(() => {
-      checkAuth();
+    const interval = setInterval(async () => {
+      try {
+        const token = await AsyncStorage.getItem('token');
+        setIsAuthenticated(!!token);
+      } catch (error) {
+        console.error('Auth check error:', error);
+      }
     }, 1000);
     
     return () => clearInterval(interval);
   }, []);
-
-  const checkAuth = async () => {
-    try {
-      const token = await AsyncStorage.getItem('token');
-      setIsAuthenticated(!!token);
-    } catch (error) {
-      console.error('Auth check error:', error);
-    } finally {
-      if (isLoading) {
-        setTimeout(() => setIsLoading(false), 2000); // Show splash for 2 seconds
-      }
-    }
-  };
 
   if (isLoading) {
     return <SplashScreen />;
