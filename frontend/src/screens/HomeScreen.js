@@ -113,6 +113,10 @@ const HomeScreen = ({navigation}) => {
               })
             }
             variant="outline"
+            style={styles.viewButton}
+          />
+        </Card>
+      )}
       <View style={styles.quickActionsGrid}>
         <TouchableOpacity style={styles.actionTile} onPress={() => navigation.navigate('BookAppointment')}>
           <View style={styles.actionIconBg}><Feather name="calendar" size={20} color="#06B6D4" /></View>
@@ -129,13 +133,6 @@ const HomeScreen = ({navigation}) => {
         <TouchableOpacity style={styles.actionTile} onPress={() => navigation.navigate('Help')}>
           <View style={styles.actionIconBg}><Feather name="help-circle" size={20} color="#06B6D4" /></View>
           <Text style={styles.actionLabel}>Support</Text>
-        </TouchableOpacity>
-      </View>
-        <TouchableOpacity
-          style={styles.actionButton}
-          onPress={() => navigation.navigate('Help')}>
-          <Feather name="help-circle" size={28} color="#06B6D4" style={styles.actionIcon} />
-          <Text style={styles.actionText}>FAQs</Text>
         </TouchableOpacity>
       </View>
 
@@ -304,6 +301,85 @@ const styles = StyleSheet.create({
   reminderStatus: {
     ...typography.small,
     color: colors.primary,
+  },
+  gradientTop: {
+    position: 'absolute',
+    top: -150,
+    left: -80,
+    width: 380,
+    height: 380,
+    borderRadius: 200,
+    backgroundColor: colors.primary,
+    opacity: 0.08,
+    pointerEvents: 'none',
+  },
+  gradientBottom: {
+    position: 'absolute',
+    bottom: -120,
+    right: -80,
+    width: 320,
+    height: 320,
+    borderRadius: 200,
+    backgroundColor: colors.primaryLight,
+    opacity: 0.06,
+    pointerEvents: 'none',
+  },
+  quickActionsGrid: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: spacing.xl,
+  },
+  actionTile: {
+    flex: 1,
+    backgroundColor: colors.card,
+    borderRadius: 14,
+    padding: spacing.md,
+    marginHorizontal: spacing.xs,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
+  actionIconBg: {
+    backgroundColor: colors.primaryLight,
+    borderRadius: 24,
+    padding: 8,
+    marginBottom: spacing.sm,
+  },
+  actionLabel: {
+    ...typography.small,
+    color: colors.textPrimary,
+  },
+  rowIconTextSmall: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: spacing.xs,
+  },
+  smallIcon: {
+    marginRight: spacing.sm,
+  },
+  appointmentTimeDate: {
+    ...typography.small,
+    color: colors.textSecondary,
+  },
+  shadow: {
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 8},
+    shadowOpacity: 0.06,
+    shadowRadius: 12,
+    elevation: 6,
+  },
+  shadowSmall: {
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 4},
+    shadowOpacity: 0.04,
+    shadowRadius: 6,
+    elevation: 3,
+  },
+  pending: {
+    color: colors.warning,
+  },
+  done: {
+    color: colors.success,
   },
 });
 

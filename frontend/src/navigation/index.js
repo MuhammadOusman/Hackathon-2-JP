@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Text} from 'react-native';
+import {Text, View, Platform, StyleSheet} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -22,55 +22,148 @@ import Feather from 'react-native-vector-icons/Feather';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
+const styles = StyleSheet.create({
+  tabItem: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 50,
+    height: '100%',
+  },
+  tabIconWrapper: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'transparent',
+  },
+  tabIconFocused: {
+    width: 54,
+    height: 54,
+    borderRadius: 27,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: colors.primary,
+    position: 'absolute',
+    top: -22,
+    shadowColor: colors.primary,
+    shadowOffset: {width: 0, height: 8},
+    shadowOpacity: 0.45,
+    shadowRadius: 16,
+    elevation: 10,
+    borderWidth: 3,
+    borderColor: '#F5FAFB',
+  },
+});
+
 // Tab Navigator for Main App
 function MainTabs() {
   return (
     <Tab.Navigator
       screenOptions={{
+        tabBarShowLabel: false,
         tabBarActiveTintColor: colors.primary,
         tabBarInactiveTintColor: colors.textMuted,
         tabBarStyle: {
-          backgroundColor: colors.card,
-          borderTopColor: colors.border,
-          paddingBottom: 8,
-          paddingTop: 8,
-          height: 64,
+          position: 'absolute',
+          bottom: Platform.OS === 'ios' ? 34 : 24,
+          left: '25%',
+          right: '25%',
+          elevation: 8,
+          borderRadius: 32,
+          backgroundColor: '#2A2A2A',
+          height: 56,
+          paddingHorizontal: 0,
+          paddingVertical: 0,
+          borderWidth: 0,
+          shadowColor: '#000',
+          shadowOffset: {width: 0, height: 12},
+          shadowOpacity: 0.35,
+          shadowRadius: 24,
         },
         headerStyle: {
           backgroundColor: colors.card,
         },
         headerTintColor: colors.textPrimary,
       }}>
-        <Tab.Screen
+      <Tab.Screen
         name="Home"
         component={HomeScreen}
         options={{
-          tabBarLabel: 'Home',
-          tabBarIcon: ({color}) => <Feather name="home" size={22} color={color} />,
+          tabBarLabel: '',
+          tabBarIcon: ({focused}) => (
+            <View style={styles.tabItem}>
+              {focused ? (
+                <View style={styles.tabIconFocused}>
+                  <Feather name="home" size={26} color="#FFFFFF" />
+                </View>
+              ) : (
+                <View style={styles.tabIconWrapper}>
+                  <Feather name="home" size={22} color="#6B6B6B" />
+                </View>
+              )}
+            </View>
+          ),
         }}
       />
       <Tab.Screen
         name="Appointments"
         component={AppointmentsListScreen}
         options={{
-          tabBarLabel: 'Appointments',
-          tabBarIcon: ({color}) => <Feather name="calendar" size={22} color={color} />,
+          tabBarLabel: '',
+          tabBarIcon: ({focused}) => (
+            <View style={styles.tabItem}>
+              {focused ? (
+                <View style={styles.tabIconFocused}>
+                  <Feather name="calendar" size={26} color="#FFFFFF" />
+                </View>
+              ) : (
+                <View style={styles.tabIconWrapper}>
+                  <Feather name="calendar" size={22} color="#6B6B6B" />
+                </View>
+              )}
+            </View>
+          ),
         }}
       />
       <Tab.Screen
         name="Records"
         component={MedicalRecordsScreen}
         options={{
-          tabBarLabel: 'Records',
-          tabBarIcon: ({color}) => <Feather name="file-text" size={22} color={color} />,
+          tabBarLabel: '',
+          tabBarIcon: ({focused}) => (
+            <View style={styles.tabItem}>
+              {focused ? (
+                <View style={styles.tabIconFocused}>
+                  <Feather name="file-text" size={26} color="#FFFFFF" />
+                </View>
+              ) : (
+                <View style={styles.tabIconWrapper}>
+                  <Feather name="file-text" size={22} color="#6B6B6B" />
+                </View>
+              )}
+            </View>
+          ),
         }}
       />
       <Tab.Screen
         name="Profile"
         component={ProfileScreen}
         options={{
-          tabBarLabel: 'Profile',
-          tabBarIcon: ({color}) => <Feather name="user" size={22} color={color} />,
+          tabBarLabel: '',
+          tabBarIcon: ({focused}) => (
+            <View style={styles.tabItem}>
+              {focused ? (
+                <View style={styles.tabIconFocused}>
+                  <Feather name="user" size={26} color="#FFFFFF" />
+                </View>
+              ) : (
+                <View style={styles.tabIconWrapper}>
+                  <Feather name="user" size={22} color="#6B6B6B" />
+                </View>
+              )}
+            </View>
+          ),
         }}
       />
     </Tab.Navigator>
@@ -106,7 +199,7 @@ export default function Navigation() {
         console.error('Auth check error:', error);
       }
     }, 1000);
-    
+
     return () => clearInterval(interval);
   }, []);
 
