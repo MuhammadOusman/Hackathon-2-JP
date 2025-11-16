@@ -190,8 +190,29 @@ export const reminderService = {
 
 // Medical Record Services
 export const recordService = {
+  getRecords: async () => {
+    const response = await api.get('/records');
+    return response.data;
+  },
+
   getAll: async () => {
     const response = await api.get('/records');
+    return response.data;
+  },
+
+  uploadRecord: async file => {
+    const formData = new FormData();
+    formData.append('file', {
+      uri: file.uri,
+      type: file.type,
+      name: file.name,
+    });
+
+    const response = await api.post('/records/upload', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
     return response.data;
   },
 
@@ -208,6 +229,11 @@ export const recordService = {
         'Content-Type': 'multipart/form-data',
       },
     });
+    return response.data;
+  },
+
+  deleteRecord: async id => {
+    const response = await api.delete(`/records/${id}`);
     return response.data;
   },
 

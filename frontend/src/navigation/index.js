@@ -92,6 +92,13 @@ export default function Navigation() {
 
   useEffect(() => {
     checkAuth();
+    
+    // Check auth periodically to update navigation
+    const interval = setInterval(() => {
+      checkAuth();
+    }, 1000);
+    
+    return () => clearInterval(interval);
   }, []);
 
   const checkAuth = async () => {
@@ -101,7 +108,9 @@ export default function Navigation() {
     } catch (error) {
       console.error('Auth check error:', error);
     } finally {
-      setTimeout(() => setIsLoading(false), 2000); // Show splash for 2 seconds
+      if (isLoading) {
+        setTimeout(() => setIsLoading(false), 2000); // Show splash for 2 seconds
+      }
     }
   };
 

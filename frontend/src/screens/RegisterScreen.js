@@ -28,7 +28,7 @@ const RegisterScreen = ({navigation}) => {
     setLoading(true);
     try {
       await authService.register(name, email, password);
-      navigation.replace('MainTabs');
+      // Navigation will happen automatically through the auth check in navigation/index.js
     } catch (error) {
       Alert.alert('Registration Failed', error.response?.data?.message || 'Please try again');
     } finally {

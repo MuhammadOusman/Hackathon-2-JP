@@ -27,7 +27,7 @@ const LoginScreen = ({navigation}) => {
     setLoading(true);
     try {
       await authService.login(email, password);
-      navigation.replace('MainTabs');
+      // Navigation will happen automatically through the auth check in navigation/index.js
     } catch (error) {
       Alert.alert('Login Failed', error.response?.data?.message || 'Invalid credentials');
     } finally {

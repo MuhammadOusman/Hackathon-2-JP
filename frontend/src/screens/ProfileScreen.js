@@ -7,6 +7,7 @@ import {
   Alert,
   TouchableOpacity,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Card from '../components/Card';
 import Button from '../components/Button';
 import Avatar from '../components/Avatar';
@@ -35,7 +36,9 @@ const ProfileScreen = ({navigation}) => {
       {
         text: 'Logout',
         style: 'destructive',
-        onPress: async () => { await AsyncStorage.clear(); setTimeout(() => navigation.getParent()?.reset({index: 0, routes: [{name: 'Login'}]}), 100); }]});
+        onPress: async () => {
+          // Just clear storage - the auth polling in navigation will handle the rest
+          await AsyncStorage.clear();
         },
       },
     ]);
