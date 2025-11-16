@@ -46,7 +46,7 @@ const HomeScreen = ({navigation}) => {
       const healthStats = await statsService.get();
       setStats(healthStats);
     } catch (error) {
-      console.error('Error loading data:', error);
+      // Error loading data
     }
   };
 
@@ -188,7 +188,9 @@ const HomeScreen = ({navigation}) => {
               </View>
             </View>
 
-            <TouchableOpacity style={styles.viewDetailsButton}>
+            <TouchableOpacity 
+              style={styles.viewDetailsButton}
+              onPress={() => navigation.navigate('Appointments')}>
               <Text style={styles.viewDetailsText}>View Details</Text>
               <Feather name="arrow-right" size={18} color="#FFFFFF" />
             </TouchableOpacity>

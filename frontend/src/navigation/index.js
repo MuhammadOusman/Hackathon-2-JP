@@ -187,7 +187,7 @@ export default function Navigation() {
         const token = await AsyncStorage.getItem('token');
         setIsAuthenticated(!!token);
       } catch (error) {
-        console.error('Auth check error:', error);
+        // Auth check error
       } finally {
         setTimeout(() => setIsLoading(false), 2000);
       }
@@ -201,7 +201,7 @@ export default function Navigation() {
         const token = await AsyncStorage.getItem('token');
         setIsAuthenticated(!!token);
       } catch (error) {
-        console.error('Auth check error:', error);
+        // Auth check error
       }
     }, 1000);
 
