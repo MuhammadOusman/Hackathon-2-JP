@@ -14,6 +14,7 @@ import Card from '../components/Card';
 import Button from '../components/Button';
 import {medicationService} from '../services/api';
 import {colors, typography, spacing, borderRadius} from '../theme';
+import Feather from 'react-native-vector-icons/Feather';
 
 const MedicationsScreen = ({navigation}) => {
   const [medications, setMedications] = useState([]);
@@ -101,16 +102,22 @@ const MedicationsScreen = ({navigation}) => {
   };
 
   const renderMedication = ({item}) => (
-    <Card style={styles.medicationCard}>
+      <Card style={styles.medicationCard}>
       <View style={styles.medicationHeader}>
         <Text style={styles.medicationName}>{item.name}</Text>
         <TouchableOpacity onPress={() => handleDelete(item._id)}>
-          <Text style={styles.deleteButton}>🗑️</Text>
+          <Feather name="trash-2" size={20} style={styles.deleteButton} color={colors.textMuted} />
         </TouchableOpacity>
       </View>
-      <Text style={styles.dosage}>💊 {item.dosage}</Text>
+      <View style={styles.rowIconText}>
+        <Feather name="plus" size={18} color="#06B6D4" style={styles.smallIcon} />
+        <Text style={styles.dosage}>{item.dosage}</Text>
+      </View>
       {item.frequency && (
-        <Text style={styles.frequency}>🕐 {item.frequency}</Text>
+        <View style={styles.rowIconText}>
+          <Feather name="clock" size={16} color="#06B6D4" style={styles.smallIcon} />
+          <Text style={styles.frequency}>{item.frequency}</Text>
+        </View>
       )}
       {item.notes && <Text style={styles.notes}>{item.notes}</Text>}
     </Card>
@@ -151,7 +158,7 @@ const MedicationsScreen = ({navigation}) => {
             <View style={styles.modalHeader}>
               <Text style={styles.modalTitle}>Add Medication</Text>
               <TouchableOpacity onPress={() => setModalVisible(false)}>
-                <Text style={styles.closeButton}>✕</Text>
+                <Feather name="x" size={22} color={colors.textMuted} style={styles.closeButton} />
               </TouchableOpacity>
             </View>
 
@@ -242,6 +249,14 @@ const styles = StyleSheet.create({
   },
   deleteButton: {
     fontSize: 20,
+  },
+  rowIconText: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: spacing.xs,
+  },
+  smallIcon: {
+    marginRight: spacing.sm,
   },
   dosage: {
     ...typography.body,

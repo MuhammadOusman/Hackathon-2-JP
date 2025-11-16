@@ -13,6 +13,7 @@ import Card from '../components/Card';
 import Button from '../components/Button';
 import {recordService} from '../services/api';
 import {colors, typography, spacing} from '../theme';
+import Feather from 'react-native-vector-icons/Feather';
 
 const MedicalRecordsScreen = () => {
   const [records, setRecords] = useState([]);
@@ -76,11 +77,14 @@ const MedicalRecordsScreen = () => {
   };
 
   const renderRecord = ({item}) => (
-    <Card style={styles.recordCard}>
+        <Card style={styles.recordCard}>
       <View style={styles.recordHeader}>
-        <Text style={styles.recordIcon}>
-          {item.type === 'pdf' ? '📄' : '🖼️'}
-        </Text>
+        <Feather
+          name={item.type === 'pdf' ? 'file-text' : 'image'}
+          size={28}
+          color="#06B6D4"
+          style={styles.recordIcon}
+        />
         <View style={styles.recordInfo}>
           <Text style={styles.recordType}>{item.type.toUpperCase()}</Text>
           <Text style={styles.recordDate}>

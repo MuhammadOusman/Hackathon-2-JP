@@ -11,6 +11,7 @@ import Card from '../components/Card';
 import StatCard from '../components/StatCard';
 import Avatar from '../components/Avatar';
 import Button from '../components/Button';
+import Feather from 'react-native-vector-icons/Feather';
 import {
   appointmentService,
   reminderService,
@@ -63,6 +64,8 @@ const HomeScreen = ({navigation}) => {
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }>
       {/* Header */}
+      <View style={styles.gradientTop} />
+      <View style={styles.gradientBottom} />
       <View style={styles.header}>
         <View>
           <Text style={styles.greeting}>Hello, {user?.name || 'User'}</Text>
@@ -90,14 +93,16 @@ const HomeScreen = ({navigation}) => {
               <Text style={styles.specialty}>
                 {nextAppointment.providerId?.specialty}
               </Text>
-              <Text style={styles.appointmentTime}>
-                {new Date(nextAppointment.startTime).toLocaleDateString('en-US', {
-                  month: 'short',
-                  day: 'numeric',
-                  hour: '2-digit',
-                  minute: '2-digit',
-                })}
-              </Text>
+              <View>
+                <View style={styles.rowIconTextSmall}>
+                  <Feather name="calendar" size={14} color="#06B6D4" style={styles.smallIcon} />
+                  <Text style={styles.appointmentTimeDate}>{new Date(nextAppointment.startTime).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</Text>
+                </View>
+                <View style={styles.rowIconTextSmall}>
+                  <Feather name="clock" size={14} color="#06B6D4" style={styles.smallIcon} />
+                  <Text style={styles.appointmentTime}>{new Date(nextAppointment.startTime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</Text>
+                </View>
+              </View>
             </View>
           </View>
           <Button
@@ -108,39 +113,28 @@ const HomeScreen = ({navigation}) => {
               })
             }
             variant="outline"
-            size="small"
-            style={styles.viewButton}
-          />
-        </Card>
-      )}
-
-      {/* Quick Actions */}
-      <View style={styles.quickActions}>
-        <TouchableOpacity
-          style={styles.actionButton}
-          onPress={() => navigation.navigate('BookAppointment')}>
-          <Text style={styles.actionIcon}>📅</Text>
-          <Text style={styles.actionText}>Schedule</Text>
+      <View style={styles.quickActionsGrid}>
+        <TouchableOpacity style={styles.actionTile} onPress={() => navigation.navigate('BookAppointment')}>
+          <View style={styles.actionIconBg}><Feather name="calendar" size={20} color="#06B6D4" /></View>
+          <Text style={styles.actionLabel}>Schedule</Text>
         </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.actionButton}
-          onPress={() => navigation.navigate('Appointments')}>
-          <Text style={styles.actionIcon}>🩺</Text>
-          <Text style={styles.actionText}>Checkup</Text>
+        <TouchableOpacity style={styles.actionTile} onPress={() => navigation.navigate('Appointments')}>
+          <View style={styles.actionIconBg}><Feather name="stethoscope" size={20} color="#06B6D4" /></View>
+          <Text style={styles.actionLabel}>Checkup</Text>
         </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.actionButton}
-          onPress={() => navigation.navigate('Records')}>
-          <Text style={styles.actionIcon}>�</Text>
-          <Text style={styles.actionText}>Messages</Text>
+        <TouchableOpacity style={styles.actionTile} onPress={() => navigation.navigate('Records')}>
+          <View style={styles.actionIconBg}><Feather name="file-text" size={20} color="#06B6D4" /></View>
+          <Text style={styles.actionLabel}>Records</Text>
         </TouchableOpacity>
-
+        <TouchableOpacity style={styles.actionTile} onPress={() => navigation.navigate('Help')}>
+          <View style={styles.actionIconBg}><Feather name="help-circle" size={20} color="#06B6D4" /></View>
+          <Text style={styles.actionLabel}>Support</Text>
+        </TouchableOpacity>
+      </View>
         <TouchableOpacity
           style={styles.actionButton}
           onPress={() => navigation.navigate('Help')}>
-          <Text style={styles.actionIcon}>❓</Text>
+          <Feather name="help-circle" size={28} color="#06B6D4" style={styles.actionIcon} />
           <Text style={styles.actionText}>FAQs</Text>
         </TouchableOpacity>
       </View>
@@ -184,15 +178,15 @@ const HomeScreen = ({navigation}) => {
             <Card key={reminder._id} style={styles.reminderCard}>
               <View style={styles.reminderContent}>
                 <Text style={styles.reminderTitle}>{reminder.title}</Text>
-                <Text style={styles.reminderTime}>
-                  {new Date(reminder.triggerTime).toLocaleTimeString('en-US', {
-                    hour: '2-digit',
-                    minute: '2-digit',
-                  })}
-                </Text>
+                  <Text style={styles.reminderTime}>
+                    {new Date(reminder.triggerTime).toLocaleTimeString('en-US', {
+                      hour: '2-digit',
+                      minute: '2-digit',
+                    })}
+                  </Text>
               </View>
               <Text style={styles.reminderStatus}>
-                {reminder.status === 'pending' ? '⏰ Pending' : '✓ Done'}
+                {reminder.status === 'pending' ? 'Pending' : 'Done'}
               </Text>
             </Card>
           ))}

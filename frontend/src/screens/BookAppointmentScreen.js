@@ -13,6 +13,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import Card from '../components/Card';
 import Button from '../components/Button';
 import Avatar from '../components/Avatar';
+import Feather from 'react-native-vector-icons/Feather';
 import {providerService, appointmentService} from '../services/api';
 import {colors, typography, spacing, borderRadius} from '../theme';
 
@@ -97,7 +98,7 @@ const BookAppointmentScreen = ({navigation}) => {
   };
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+    <ScrollView style={styles.container} contentContainerStyle={styles.content} keyboardShouldPersistTaps="always">
       <Text style={styles.sectionTitle}>Select Doctor</Text>
       <ScrollView
         horizontal
@@ -126,7 +127,7 @@ const BookAppointmentScreen = ({navigation}) => {
           <TouchableOpacity
             style={styles.dateTimeButton}
             onPress={() => setShowDatePicker(true)}>
-            <Text style={styles.dateTimeIcon}>📅</Text>
+            <Feather name="calendar" style={styles.dateTimeIcon} size={20} color="#06B6D4" />
             <Text style={styles.dateTimeText}>{formatDate(date)}</Text>
           </TouchableOpacity>
           {showDatePicker && (
@@ -145,7 +146,7 @@ const BookAppointmentScreen = ({navigation}) => {
           <TouchableOpacity
             style={styles.dateTimeButton}
             onPress={() => setShowTimePicker(true)}>
-            <Text style={styles.dateTimeIcon}>🕐</Text>
+            <Feather name="clock" style={styles.dateTimeIcon} size={20} color="#06B6D4" />
             <Text style={styles.dateTimeText}>{formatTime(time)}</Text>
           </TouchableOpacity>
           {showTimePicker && (

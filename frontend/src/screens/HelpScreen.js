@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import Card from '../components/Card';
+import Feather from 'react-native-vector-icons/Feather';
 import {colors, typography, spacing} from '../theme';
 
 const HelpScreen = () => {
@@ -52,11 +53,18 @@ const HelpScreen = () => {
 
       <Text style={styles.sectionTitle}>Contact Us</Text>
       <Card style={styles.contactCard}>
-        <Text style={styles.contactItem}>📧 Email: support@medicare.com</Text>
-        <Text style={styles.contactItem}>📞 Phone: +1 (555) 123-4567</Text>
-        <Text style={styles.contactItem}>
-          🕐 Hours: Mon-Fri 9AM-6PM EST
-        </Text>
+        <View style={styles.contactRow}>
+          <Feather name="mail" size={16} color="#06B6D4" style={{marginRight: 10}} />
+          <Text style={styles.contactItem}>Email: support@medicare.com</Text>
+        </View>
+        <View style={styles.contactRow}>
+          <Feather name="phone" size={16} color="#06B6D4" style={{marginRight: 10}} />
+          <Text style={styles.contactItem}>Phone: +1 (555) 123-4567</Text>
+        </View>
+        <View style={styles.contactRow}>
+          <Feather name="clock" size={16} color="#06B6D4" style={{marginRight: 10}} />
+          <Text style={styles.contactItem}>Hours: Mon-Fri 9AM-6PM EST</Text>
+        </View>
       </Card>
     </ScrollView>
   );
@@ -102,6 +110,11 @@ const styles = StyleSheet.create({
   },
   contactCard: {
     marginBottom: spacing.xxl,
+  },
+  contactRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: spacing.md,
   },
   contactItem: {
     ...typography.body,

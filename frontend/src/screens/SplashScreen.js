@@ -1,5 +1,6 @@
 ﻿import React, {useEffect, useRef} from 'react';
 import {View, Text, StyleSheet, Animated, Easing} from 'react-native';
+import Feather from 'react-native-vector-icons/Feather';
 
 const SplashScreen = () => {
   const logoScale = useRef(new Animated.Value(0.3)).current;
@@ -84,7 +85,7 @@ const SplashScreen = () => {
           },
         ]}>
         <View style={styles.logoCircle}>
-          <Text style={styles.logoEmoji}>🏥</Text>
+          <Feather name="activity" color="#fff" size={64} />
         </View>
       </Animated.View>
 

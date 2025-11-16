@@ -12,6 +12,7 @@ import Button from '../components/Button';
 import Avatar from '../components/Avatar';
 import {appointmentService} from '../services/api';
 import {colors, typography, spacing} from '../theme';
+import Feather from 'react-native-vector-icons/Feather';
 
 const AppointmentsListScreen = ({navigation}) => {
   const [appointments, setAppointments] = useState([]);
@@ -63,19 +64,23 @@ const AppointmentsListScreen = ({navigation}) => {
         </View>
       </View>
       <View style={styles.appointmentDetails}>
-        <Text style={styles.dateTime}>
-          📅 {new Date(item.startTime).toLocaleDateString('en-US', {
+        <View style={styles.rowIconText}>
+          <Feather name="calendar" size={16} color="#06B6D4" style={{marginRight: 10}} />
+          <Text style={styles.dateTime}>{new Date(item.startTime).toLocaleDateString('en-US', {
             month: 'short',
             day: 'numeric',
             year: 'numeric',
           })}
-        </Text>
-        <Text style={styles.dateTime}>
-          🕐 {new Date(item.startTime).toLocaleTimeString('en-US', {
+          </Text>
+        </View>
+        <View style={styles.rowIconText}>
+          <Feather name="clock" size={14} color="#06B6D4" style={{marginRight: 10}} />
+          <Text style={styles.dateTime}>{new Date(item.startTime).toLocaleTimeString('en-US', {
             hour: '2-digit',
             minute: '2-digit',
           })}
-        </Text>
+          </Text>
+        </View>
       </View>
       {item.reason && <Text style={styles.reason}>{item.reason}</Text>}
       <View style={styles.statusContainer}>
@@ -171,6 +176,11 @@ const styles = StyleSheet.create({
   dateTime: {
     ...typography.body,
     color: colors.textPrimary,
+    marginBottom: spacing.xs,
+  },
+  rowIconText: {
+    flexDirection: 'row',
+    alignItems: 'center',
     marginBottom: spacing.xs,
   },
   reason: {

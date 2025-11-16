@@ -17,6 +17,7 @@ import ProfileScreen from '../screens/ProfileScreen';
 import HelpScreen from '../screens/HelpScreen';
 
 import {colors} from '../theme';
+import Feather from 'react-native-vector-icons/Feather';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -40,12 +41,12 @@ function MainTabs() {
         },
         headerTintColor: colors.textPrimary,
       }}>
-      <Tab.Screen
+        <Tab.Screen
         name="Home"
         component={HomeScreen}
         options={{
           tabBarLabel: 'Home',
-          tabBarIcon: ({color}) => <Text style={{fontSize: 24}}>🏠</Text>,
+          tabBarIcon: ({color}) => <Feather name="home" size={22} color={color} />,
         }}
       />
       <Tab.Screen
@@ -53,7 +54,7 @@ function MainTabs() {
         component={AppointmentsListScreen}
         options={{
           tabBarLabel: 'Appointments',
-          tabBarIcon: ({color}) => <Text style={{fontSize: 24}}>📅</Text>,
+          tabBarIcon: ({color}) => <Feather name="calendar" size={22} color={color} />,
         }}
       />
       <Tab.Screen
@@ -61,7 +62,7 @@ function MainTabs() {
         component={MedicalRecordsScreen}
         options={{
           tabBarLabel: 'Records',
-          tabBarIcon: ({color}) => <Text style={{fontSize: 24}}>📄</Text>,
+          tabBarIcon: ({color}) => <Feather name="file-text" size={22} color={color} />,
         }}
       />
       <Tab.Screen
@@ -69,7 +70,7 @@ function MainTabs() {
         component={ProfileScreen}
         options={{
           tabBarLabel: 'Profile',
-          tabBarIcon: ({color}) => <Text style={{fontSize: 24}}>👤</Text>,
+          tabBarIcon: ({color}) => <Feather name="user" size={22} color={color} />,
         }}
       />
     </Tab.Navigator>
