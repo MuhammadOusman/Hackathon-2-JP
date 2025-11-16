@@ -38,10 +38,13 @@ const RegisterScreen = ({navigation}) => {
     }
 
     setLoading(true);
+    console.log('Frontend: Sending register request for email:', email);
     try {
       await authService.register(name, email, password);
+      console.log('Frontend: Register successful');
       // Navigation will happen automatically through the auth check in navigation/index.js
     } catch (error) {
+      console.log('Frontend: Register failed with error:', error);
       Alert.alert('Registration Failed', error.response?.data?.message || 'Please try again');
     } finally {
       setLoading(false);

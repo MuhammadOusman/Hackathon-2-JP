@@ -76,7 +76,7 @@ function MainTabs() {
           right: '25%',
           elevation: 8,
           borderRadius: 32,
-          backgroundColor: '#2A2A2A',
+          backgroundColor: '#0A0F1C',
           height: 56,
           paddingHorizontal: 0,
           paddingVertical: 0,

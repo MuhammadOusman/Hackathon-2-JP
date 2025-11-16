@@ -67,9 +67,12 @@ const LoginScreen = ({navigation}) => {
 
     animateButton();
     setLoading(true);
+    console.log('Frontend: Sending login request for email:', email);
     try {
       await authService.login(email, password);
+      console.log('Frontend: Login successful');
     } catch (error) {
+      console.log('Frontend: Login failed with error:', error);
       Alert.alert('Login Failed', error.response?.data?.message || 'Invalid credentials');
     } finally {
       setLoading(false);
@@ -154,10 +157,6 @@ const LoginScreen = ({navigation}) => {
                   />
                 </View>
               </View>
-
-              <TouchableOpacity style={styles.forgotButton}>
-                <Text style={styles.forgotText}>Forgot Password?</Text>
-              </TouchableOpacity>
 
               <Animated.View style={{transform: [{scale: buttonScale}]}}>
                 <Button
@@ -314,15 +313,6 @@ const styles = StyleSheet.create({
     paddingVertical: 18,
     fontSize: 16,
     color: '#FFFFFF',
-  },
-  forgotButton: {
-    alignSelf: 'flex-end',
-    marginBottom: 28,
-  },
-  forgotText: {
-    fontSize: 14,
-    color: '#06B6D4',
-    fontWeight: '600',
   },
   signInButton: {
     marginBottom: 24,

@@ -10,6 +10,7 @@ const generateToken = (id) => {
 // @route   POST /api/auth/register
 // @access  Public
 const register = async (req, res) => {
+  console.log('Backend: Register request received for email:', req.body.email);
   try {
     const { name, email, password } = req.body;
 
@@ -40,6 +41,7 @@ const register = async (req, res) => {
 // @route   POST /api/auth/login
 // @access  Public
 const login = async (req, res) => {
+  console.log('Backend: Login request received for email:', req.body.email);
   try {
     const { email, password } = req.body;
 
