@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState, useCallback} from 'react';
 import {
   View,
   Text,
@@ -18,7 +18,7 @@ const ProfileScreen = ({navigation}) => {
   const [user, setUser] = useState(null);
 
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       loadUser();
     }, [])
   );
