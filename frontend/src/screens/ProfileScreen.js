@@ -12,13 +12,16 @@ import Avatar from '../components/Avatar';
 import {authService} from '../services/api';
 import {colors, spacing} from '../theme';
 import Feather from 'react-native-vector-icons/Feather';
+import {useFocusEffect} from '@react-navigation/native';
 
 const ProfileScreen = ({navigation}) => {
   const [user, setUser] = useState(null);
 
-  useEffect(() => {
-    loadUser();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      loadUser();
+    }, [])
+  );
 
   const loadUser = async () => {
     try {
