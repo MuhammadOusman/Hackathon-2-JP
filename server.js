@@ -32,35 +32,15 @@ app.get('/health', (req, res) => {
   });
 });
 
-// Debug endpoint (no DB connection needed)
-app.get('/debug', (req, res) => {
-  res.json({
-    mongoUri: process.env.MONGO_URI ? 'Set' : 'Not Set',
-    jwtSecret: process.env.JWT_SECRET ? 'Set' : 'Not Set',
-    cloudinary: {
-      cloudName: process.env.CLOUDINARY_CLOUD_NAME ? 'Set' : 'Not Set',
-      apiKey: process.env.CLOUDINARY_API_KEY ? 'Set' : 'Not Set',
-      apiSecret: process.env.CLOUDINARY_API_SECRET ? 'Set' : 'Not Set'
-    },
-    nodeEnv: process.env.NODE_ENV
-  });
-});
-
 // Global DB connection check for all API routes
 app.use('/api/*', async (req, res, next) => {
   try {
-    console.log('🔄 Checking DB connection for:', req.path);
     // Check if already connected
     if (mongoose.connection.readyState < 1) {
-      console.log('🔌 Connecting to DB...');
       await connectDB();
-      console.log('✅ DB Connected successfully');
-    } else {
-      console.log('✅ DB already connected');
     }
     next();
   } catch (error) {
-    console.error('❌ DB Connection failed:', error);
     return res.status(500).json({ message: 'Database connection failed', error: error.message });
   }
 });
@@ -86,8 +66,7 @@ if (require.main === module) {
   const PORT = process.env.PORT || 4000;
   connectDB().then(() => {
     app.listen(PORT, '0.0.0.0', () => {
-      console.log(`🚀 Server running on http://0.0.0.0:${PORT}`);
-      console.log(`🚀 Accessible at http://192.168.100.30:${PORT} on your network`);
+      // Server started
     });
   });
 }

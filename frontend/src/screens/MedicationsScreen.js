@@ -37,7 +37,7 @@ const MedicationsScreen = ({navigation}) => {
       const data = await medicationService.getAll();
       setMedications(data);
     } catch (error) {
-      console.error('Error loading medications:', error);
+      // Error handled silently
     }
   };
 

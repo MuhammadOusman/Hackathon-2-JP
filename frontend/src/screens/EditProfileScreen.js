@@ -79,7 +79,6 @@ const EditProfileScreen = ({navigation}) => {
         },
       ]);
     } catch (error) {
-      console.log('Profile update error:', error);
       Alert.alert('Error', 'Failed to update profile');
     } finally {
       setSaving(false);

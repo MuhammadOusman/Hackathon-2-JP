@@ -62,7 +62,6 @@ const ProfileScreen = ({navigation}) => {
         healthScore: healthScore,
       });
     } catch (error) {
-      console.log('Error loading stats:', error);
       // Keep default values if API fails
     }
   };

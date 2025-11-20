@@ -14,9 +14,8 @@ const connectDB = async () => {
       bufferCommands: false, // Disable mongoose buffering
     });
 
-    console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
+    // DB connected successfully
   } catch (error) {
-    console.error('❌ MongoDB Connection Error:', error.message);
     throw error; // Re-throw to handle in calling function
   }
 };

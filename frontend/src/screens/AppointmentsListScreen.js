@@ -27,7 +27,7 @@ const AppointmentsListScreen = ({navigation}) => {
       const data = await appointmentService.getAll();
       setAppointments(data);
     } catch (error) {
-      console.error('Error loading appointments:', error);
+      // Error handled silently
     }
   };
 

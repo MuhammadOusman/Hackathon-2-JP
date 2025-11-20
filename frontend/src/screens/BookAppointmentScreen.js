@@ -44,7 +44,7 @@ const BookAppointmentScreen = ({navigation}) => {
       const data = await providerService.getAll();
       setProviders(data);
     } catch (error) {
-      console.error('Error loading providers:', error);
+      // Error handled silently
     }
   };
 

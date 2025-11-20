@@ -1,97 +1,316 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Medicare - Healthcare Management App
 
-# Getting Started
+A comprehensive mobile healthcare management application built with React Native. Medicare empowers patients to take control of their healthcare journey through appointment management, medication tracking, medical record storage, and health monitoring.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+## 📱 Overview
 
-## Step 1: Start Metro
+Medicare is a feature-rich healthcare companion app that provides:
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+- **Appointment Management**: Book, track, and manage healthcare appointments
+- **Medication Tracking**: Monitor medications with smart reminders
+- **Medical Records**: Securely store and access medical documents
+- **Health Statistics**: Track vital signs and health metrics
+- **Provider Directory**: Browse and connect with healthcare providers
+- **User Profiles**: Personalized health management dashboard
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+## 🏗️ Architecture
 
-```sh
-# Using npm
+### Tech Stack
+- **Framework**: React Native (Expo)
+- **Language**: JavaScript/TypeScript
+- **Navigation**: React Navigation
+- **State Management**: React Hooks
+- **HTTP Client**: Axios
+- **Storage**: AsyncStorage
+- **UI Components**: Custom components with React Native
+- **Styling**: Theme-based styling system
+
+### Project Structure
+```
+frontend/
+├── android/              # Android native code
+├── ios/                  # iOS native code
+├── src/
+│   ├── assets/          # Images and static assets
+│   ├── components/      # Reusable UI components
+│   ├── hooks/           # Custom React hooks
+│   ├── navigation/      # Navigation configuration
+│   ├── screens/         # App screens/pages
+│   ├── services/        # API services and utilities
+│   ├── theme/           # Theme and styling constants
+│   └── utils/           # Helper functions
+├── __tests__/           # Unit tests
+├── App.tsx              # Main app component
+└── package.json         # Dependencies and scripts
+```
+
+## 🚀 Quick Start
+
+### Prerequisites
+- Node.js (v16 or higher)
+- npm or yarn
+- React Native development environment
+- Android Studio (for Android development)
+- Xcode (for iOS development, macOS only)
+
+### Installation
+
+1. **Clone and navigate to frontend directory:**
+```bash
+cd frontend
+```
+
+2. **Install dependencies:**
+```bash
+npm install
+```
+
+3. **Environment Setup:**
+Create a `.env` file in the frontend root directory:
+```env
+API_BASE_URL=http://localhost:4000/api
+# For production, use your deployed backend URL
+# API_BASE_URL=https://your-backend-url.vercel.app/api
+```
+
+4. **Start Metro bundler:**
+```bash
 npm start
-
-# OR using Yarn
-yarn start
 ```
 
-## Step 2: Build and run your app
-
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
-
-### Android
-
-```sh
-# Using npm
+5. **Run on Android:**
+```bash
 npm run android
-
-# OR using Yarn
-yarn android
 ```
 
-### iOS
-
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
-```sh
-bundle install
-```
-
-Then, and every time you update your native dependencies, run:
-
-```sh
-bundle exec pod install
-```
-
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
-
-```sh
-# Using npm
+6. **Run on iOS (macOS only):**
+```bash
 npm run ios
-
-# OR using Yarn
-yarn ios
 ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+## 📱 Features
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+### 🔐 Authentication
+- User registration and login
+- Secure JWT token management
+- Persistent login sessions
+- Profile management
 
-## Step 3: Modify your app
+### 📅 Appointment Management
+- Browse healthcare providers by specialty
+- Schedule appointments with date/time selection
+- View upcoming and past appointments
+- Appointment status tracking (scheduled, completed, cancelled)
+- Reschedule or cancel appointments
 
-Now that you have successfully run the app, let's make changes!
+### 💊 Medication Management
+- Add medications with dosage and frequency
+- Set medication reminders
+- Track medication adherence
+- Update medication information
+- Medication history
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+### 📄 Medical Records
+- Upload medical documents (PDF, images)
+- Secure cloud storage with Cloudinary
+- Organize and categorize records
+- View and download records
+- Delete outdated records
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+### 📊 Health Statistics
+- Track vital signs (heart rate, blood pressure)
+- Monitor daily steps and sleep hours
+- Health metrics dashboard
+- Progress tracking over time
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+### 👥 Provider Directory
+- Browse healthcare providers
+- Filter by specialty
+- View provider ratings and information
+- Direct appointment booking
 
-## Congratulations! :tada:
+## 🎨 UI/UX Design
 
-You've successfully run and modified your React Native App. :partying_face:
+### Design System
+- **Colors**: Medical-themed color palette
+- **Typography**: Clean, readable fonts
+- **Components**: Consistent, reusable UI elements
+- **Navigation**: Intuitive bottom tab navigation
+- **Animations**: Smooth transitions and micro-interactions
 
-### Now what?
+### Screens
+- **Splash Screen**: App loading and branding
+- **Authentication**: Login/Register forms
+- **Home Dashboard**: Health overview and quick actions
+- **Appointments**: Appointment management
+- **Medications**: Medication tracking
+- **Medical Records**: Document management
+- **Health Stats**: Vital signs tracking
+- **Profile**: User settings and information
+- **Provider Directory**: Healthcare provider listings
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
+## 🔧 Configuration
 
-# Troubleshooting
+### API Configuration
+The app connects to the Medicare backend API. Update the API URL in `src/services/api.js`:
 
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+```javascript
+const API_BASE_URL = 'https://your-deployed-backend-url.com/api';
+```
 
-# Learn More
+### Build Configuration
+- **Android**: Configure in `android/app/build.gradle`
+- **iOS**: Configure in `ios/MedicareApp/Info.plist`
 
-To learn more about React Native, take a look at the following resources:
+## 📦 Build & Deployment
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+### Android APK Build
+```bash
+# Generate release APK
+cd android
+./gradlew assembleRelease
+```
+
+### iOS Build (macOS)
+```bash
+cd ios
+pod install
+# Open Xcode and build for device/archive
+```
+
+### Environment Configurations
+- **Development**: Local backend connection
+- **Staging**: Staging backend environment
+- **Production**: Production backend with optimized settings
+
+## 🧪 Testing
+
+### Unit Tests
+```bash
+npm test
+```
+
+### Integration Tests
+```bash
+npm run test:e2e
+```
+
+### Test Coverage
+```bash
+npm run test:coverage
+```
+
+## 🔒 Security Features
+
+- Secure token storage with AsyncStorage
+- API request/response encryption
+- Input validation and sanitization
+- Secure file upload handling
+- User session management
+
+## 📊 Performance Optimization
+
+- Image optimization and caching
+- Lazy loading for lists
+- Memory management
+- Bundle size optimization
+- Offline data caching
+
+## 🛠️ Development Tools
+
+### Debugging
+- React Native Debugger
+- Flipper
+- Chrome DevTools
+- Android Studio Profiler
+
+### Code Quality
+- ESLint configuration
+- Prettier code formatting
+- TypeScript support
+- Pre-commit hooks
+
+## 📱 Device Compatibility
+
+- **Android**: API 21+ (Android 5.0+)
+- **iOS**: iOS 11.0+
+- **Screen Sizes**: Responsive design for all screen sizes
+- **Orientations**: Portrait and landscape support
+
+## 🔄 API Integration
+
+The app integrates with the Medicare Backend API:
+
+### Authentication Flow
+1. User registers/logs in
+2. JWT token stored securely
+3. Token attached to all API requests
+4. Automatic token refresh handling
+
+### Data Synchronization
+- Real-time data fetching
+- Offline data caching
+- Conflict resolution
+- Background sync
+
+## 🎯 User Journey
+
+1. **Onboarding**: User creates account
+2. **Setup**: Complete health profile
+3. **Discovery**: Browse providers and services
+4. **Management**: Schedule appointments, track medications
+5. **Monitoring**: View health stats and records
+6. **Engagement**: Receive reminders and notifications
+
+## 📈 Analytics & Monitoring
+
+- User engagement tracking
+- Performance monitoring
+- Error reporting
+- Crash analytics
+- Usage statistics
+
+## 🤝 Contributing
+
+### Development Workflow
+1. Create feature branch from `main`
+2. Implement changes with tests
+3. Code review and approval
+4. Merge to `main` branch
+
+### Code Standards
+- Follow React Native best practices
+- Use TypeScript for type safety
+- Maintain test coverage above 80%
+- Follow component composition patterns
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+## 📞 Support & Contact
+
+For support, bug reports, or feature requests:
+- Create an issue on GitHub
+- Contact the development team
+- Check the troubleshooting guide
+
+## 🗺️ Roadmap
+
+### Upcoming Features
+- [ ] Push notifications for reminders
+- [ ] Telemedicine video calls
+- [ ] Health goal setting and tracking
+- [ ] Integration with wearables
+- [ ] Multi-language support
+- [ ] Dark mode theme
+- [ ] Offline mode enhancements
+
+### Version History
+- **v1.0.0**: Initial release with core features
+- **v1.1.0**: Health statistics and enhanced UI
+- **v1.2.0**: Push notifications and offline support
+
+---
+
+**Medicare** - Your personal healthcare companion, empowering better health management through technology.

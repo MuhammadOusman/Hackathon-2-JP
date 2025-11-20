@@ -67,12 +67,9 @@ const LoginScreen = ({navigation}) => {
 
     animateButton();
     setLoading(true);
-    console.log('Frontend: Sending login request for email:', email);
     try {
       await authService.login(email, password);
-      console.log('Frontend: Login successful');
     } catch (error) {
-      console.log('Frontend: Login failed with error:', error);
       Alert.alert('Login Failed', error.response?.data?.message || 'Invalid credentials');
     } finally {
       setLoading(false);

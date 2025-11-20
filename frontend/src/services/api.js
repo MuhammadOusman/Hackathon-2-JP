@@ -1,9 +1,7 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// Dynamic API URL - now using production domain
 const getBaseUrl = () => {
-  // Use the clean production URL
   return 'https://hackathon-2-jp.vercel.app';
 };
 
@@ -17,7 +15,6 @@ const api = axios.create({
   },
 });
 
-// Request interceptor to add auth token
 api.interceptors.request.use(
   async config => {
     const token = await AsyncStorage.getItem('token');
@@ -29,7 +26,6 @@ api.interceptors.request.use(
   error => Promise.reject(error),
 );
 
-// Response interceptor for error handling
 api.interceptors.response.use(
   response => response,
   async error => {
@@ -41,13 +37,8 @@ api.interceptors.response.use(
   },
 );
 
-// Auth Services
 export const authService = {
   register: async (name, email, password) => {
-    console.log('🔧 AuthService: Creating separate axios instance for registration');
-    console.log('🌐 Base URL:', BASE_URL);
-
-    // Use a separate axios instance without auth interceptor for registration
     const authApi = axios.create({
       baseURL: BASE_URL,
       timeout: 10000,
@@ -56,48 +47,8 @@ export const authService = {
       },
     });
 
-    console.log('📡 Auth API instance created');
-    console.log('📤 Request data:', { name, email, password: '[HIDDEN]' });
-
-    // Add request interceptor to log headers
-    authApi.interceptors.request.use(
-      config => {
-        console.log('📨 Outgoing request headers:', config.headers);
-        console.log('📨 Request URL:', config.baseURL + config.url);
-        console.log('📨 Request method:', config.method);
-        return config;
-      },
-      error => {
-        console.log('❌ Request interceptor error:', error);
-        return Promise.reject(error);
-      }
-    );
-
-    // Add response interceptor to log response
-    authApi.interceptors.response.use(
-      response => {
-        console.log('📥 Response received:', {
-          status: response.status,
-          data: response.data
-        });
-        return response;
-      },
-      error => {
-        console.log('❌ Response error:', {
-          status: error.response?.status,
-          data: error.response?.data,
-          headers: error.response?.headers
-        });
-        return Promise.reject(error);
-      }
-    );
-
-    console.log('🚀 Making registration request...');
     const response = await authApi.post('/api/auth/register', {name, email, password});
-
-    console.log('✅ Registration API call successful');
     if (response.data.token) {
-      console.log('💾 Storing token and user data');
       await AsyncStorage.setItem('token', response.data.token);
       await AsyncStorage.setItem('user', JSON.stringify(response.data));
     }
@@ -105,7 +56,6 @@ export const authService = {
   },
 
   login: async (email, password) => {
-    // Use a separate axios instance without auth interceptor for login
     const authApi = axios.create({
       baseURL: BASE_URL,
       timeout: 10000,
@@ -133,7 +83,6 @@ export const authService = {
   },
 };
 
-// User Services
 export const userService = {
   getProfile: async () => {
     const response = await api.get('/api/user/me');
@@ -147,7 +96,6 @@ export const userService = {
   },
 };
 
-// Provider Services
 export const providerService = {
   getAll: async () => {
     const response = await api.get('/api/providers');
@@ -160,7 +108,6 @@ export const providerService = {
   },
 };
 
-// Appointment Services
 export const appointmentService = {
   getAll: async () => {
     const response = await api.get('/api/appointments');
@@ -192,7 +139,6 @@ export const appointmentService = {
   },
 };
 
-// Medication Services
 export const medicationService = {
   getAll: async () => {
     const response = await api.get('/api/medications');
@@ -220,7 +166,6 @@ export const medicationService = {
   },
 };
 
-// Reminder Services
 export const reminderService = {
   getAll: async () => {
     const response = await api.get('/api/reminders');
@@ -253,7 +198,6 @@ export const reminderService = {
   },
 };
 
-// Medical Record Services
 export const recordService = {
   getRecords: async () => {
     const response = await api.get('/api/records');
@@ -266,15 +210,6 @@ export const recordService = {
   },
 
   uploadRecord: async file => {
-    console.log('📁 Starting file upload process...');
-    console.log('📄 File details:', {
-      uri: file.uri,
-      type: file.type,
-      name: file.name,
-      size: file.fileSize || 'unknown'
-    });
-
-    // Ensure file has a name (React Native image picker might not provide one)
     const fileName = file.name || file.uri.split('/').pop() || `upload_${Date.now()}.${file.type.split('/')[1]}`;
 
     const formData = new FormData();
@@ -282,32 +217,6 @@ export const recordService = {
       uri: file.uri,
       type: file.type,
       name: fileName,
-    });
-
-    console.log('📦 FormData created with file:', fileName);
-
-    try {
-      console.log('🚀 Sending upload request to:', `${BASE_URL}/api/records/upload`);
-      const response = await api.post('/api/records/upload', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-      console.log('✅ Upload successful:', response.data);
-      return response.data;
-    } catch (error) {
-      console.error('❌ Upload failed:', error);
-      console.error('❌ Error response:', error.response?.data);
-      throw error;
-    }
-  },
-
-  upload: async file => {
-    const formData = new FormData();
-    formData.append('file', {
-      uri: file.uri,
-      type: file.type,
-      name: file.name,
     });
 
     const response = await api.post('/api/records/upload', formData, {
@@ -329,7 +238,6 @@ export const recordService = {
   },
 };
 
-// Health Stats Services
 export const statsService = {
   get: async () => {
     const response = await api.get('/api/stats');
