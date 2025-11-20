@@ -45,8 +45,8 @@ const RegisterScreen = ({navigation}) => {
 
     try {
       console.log('📤 Frontend: Sending register request for email:', email);
-      console.log('🌐 API Base URL:', 'https://hackathon-2-358826eqn-ousmans-projects-c8bfeb83.vercel.app');
-      console.log('📡 Full URL:', 'https://hackathon-2-358826eqn-ousmans-projects-c8bfeb83.vercel.app/api/auth/register');
+      console.log('🌐 API Base URL:', 'https://hackathon-2-6tn8ab4kn-ousmans-projects-c8bfeb83.vercel.app');
+      console.log('📡 Full URL:', 'https://hackathon-2-6tn8ab4kn-ousmans-projects-c8bfeb83.vercel.app/api/auth/register');
 
       const response = await authService.register(name, email, password);
 

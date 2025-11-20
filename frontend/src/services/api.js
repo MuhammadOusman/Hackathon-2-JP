@@ -3,8 +3,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Dynamic API URL - temporarily force production URL for testing
 const getBaseUrl = () => {
-  // Use the latest Vercel deployment URL with heavy debugging
-  return 'https://hackathon-2-6f5vnj2pg-ousmans-projects-c8bfeb83.vercel.app'; // Latest Vercel URL with heavy debugging
+  // Use the latest Vercel deployment URL with fixed routing
+  return 'https://hackathon-2-6tn8ab4kn-ousmans-projects-c8bfeb83.vercel.app'; // Latest Vercel URL with routing fix
 
   // Original logic (commented out for now):
   // if (__DEV__ === false) {
@@ -99,7 +99,7 @@ export const authService = {
     );
 
     console.log('🚀 Making registration request...');
-    const response = await authApi.post('/auth/register', {name, email, password});
+    const response = await authApi.post('/api/auth/register', {name, email, password});
 
     console.log('✅ Registration API call successful');
     if (response.data.token) {
@@ -120,7 +120,7 @@ export const authService = {
       },
     });
 
-    const response = await authApi.post('/auth/login', {email, password});
+    const response = await authApi.post('/api/auth/login', {email, password});
     if (response.data.token) {
       await AsyncStorage.setItem('token', response.data.token);
       await AsyncStorage.setItem('user', JSON.stringify(response.data));
@@ -142,12 +142,12 @@ export const authService = {
 // User Services
 export const userService = {
   getProfile: async () => {
-    const response = await api.get('/user/me');
+    const response = await api.get('/api/user/me');
     return response.data;
   },
 
   updateProfile: async (name, avatar) => {
-    const response = await api.put('/user/me', {name, avatar});
+    const response = await api.put('/api/user/me', {name, avatar});
     await AsyncStorage.setItem('user', JSON.stringify(response.data));
     return response.data;
   },
@@ -156,12 +156,12 @@ export const userService = {
 // Provider Services
 export const providerService = {
   getAll: async () => {
-    const response = await api.get('/providers');
+    const response = await api.get('/api/providers');
     return response.data;
   },
 
   getById: async id => {
-    const response = await api.get(`/providers/${id}`);
+    const response = await api.get(`/api/providers/${id}`);
     return response.data;
   },
 };
@@ -169,12 +169,12 @@ export const providerService = {
 // Appointment Services
 export const appointmentService = {
   getAll: async () => {
-    const response = await api.get('/appointments');
+    const response = await api.get('/api/appointments');
     return response.data;
   },
 
   create: async (providerId, startTime, reason) => {
-    const response = await api.post('/appointments', {
+    const response = await api.post('/api/appointments', {
       providerId,
       startTime,
       reason,
@@ -183,17 +183,17 @@ export const appointmentService = {
   },
 
   getById: async id => {
-    const response = await api.get(`/appointments/${id}`);
+    const response = await api.get(`/api/appointments/${id}`);
     return response.data;
   },
 
   update: async (id, data) => {
-    const response = await api.put(`/appointments/${id}`, data);
+    const response = await api.put(`/api/appointments/${id}`, data);
     return response.data;
   },
 
   delete: async id => {
-    const response = await api.delete(`/appointments/${id}`);
+    const response = await api.delete(`/api/appointments/${id}`);
     return response.data;
   },
 };
@@ -201,12 +201,12 @@ export const appointmentService = {
 // Medication Services
 export const medicationService = {
   getAll: async () => {
-    const response = await api.get('/medications');
+    const response = await api.get('/api/medications');
     return response.data;
   },
 
   create: async (name, dosage, frequency, notes) => {
-    const response = await api.post('/medications', {
+    const response = await api.post('/api/medications', {
       name,
       dosage,
       frequency,
@@ -216,12 +216,12 @@ export const medicationService = {
   },
 
   update: async (id, data) => {
-    const response = await api.put(`/medications/${id}`, data);
+    const response = await api.put(`/api/medications/${id}`, data);
     return response.data;
   },
 
   delete: async id => {
-    const response = await api.delete(`/medications/${id}`);
+    const response = await api.delete(`/api/medications/${id}`);
     return response.data;
   },
 };
@@ -229,12 +229,12 @@ export const medicationService = {
 // Reminder Services
 export const reminderService = {
   getAll: async () => {
-    const response = await api.get('/reminders');
+    const response = await api.get('/api/reminders');
     return response.data;
   },
 
   create: async (title, medicationId, triggerTime, recurrence) => {
-    const response = await api.post('/reminders', {
+    const response = await api.post('/api/reminders', {
       title,
       medicationId,
       triggerTime,
@@ -244,17 +244,17 @@ export const reminderService = {
   },
 
   update: async (id, data) => {
-    const response = await api.put(`/reminders/${id}`, data);
+    const response = await api.put(`/api/reminders/${id}`, data);
     return response.data;
   },
 
   markDone: async id => {
-    const response = await api.patch(`/reminders/${id}/done`);
+    const response = await api.patch(`/api/reminders/${id}/done`);
     return response.data;
   },
 
   delete: async id => {
-    const response = await api.delete(`/reminders/${id}`);
+    const response = await api.delete(`/api/reminders/${id}`);
     return response.data;
   },
 };
@@ -262,12 +262,12 @@ export const reminderService = {
 // Medical Record Services
 export const recordService = {
   getRecords: async () => {
-    const response = await api.get('/records');
+    const response = await api.get('/api/records');
     return response.data;
   },
 
   getAll: async () => {
-    const response = await api.get('/records');
+    const response = await api.get('/api/records');
     return response.data;
   },
 
@@ -279,7 +279,7 @@ export const recordService = {
       name: file.name,
     });
 
-    const response = await api.post('/records/upload', formData, {
+    const response = await api.post('/api/records/upload', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -295,7 +295,7 @@ export const recordService = {
       name: file.name,
     });
 
-    const response = await api.post('/records/upload', formData, {
+    const response = await api.post('/api/records/upload', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -304,12 +304,12 @@ export const recordService = {
   },
 
   deleteRecord: async id => {
-    const response = await api.delete(`/records/${id}`);
+    const response = await api.delete(`/api/records/${id}`);
     return response.data;
   },
 
   delete: async id => {
-    const response = await api.delete(`/records/${id}`);
+    const response = await api.delete(`/api/records/${id}`);
     return response.data;
   },
 };
@@ -317,12 +317,12 @@ export const recordService = {
 // Health Stats Services
 export const statsService = {
   get: async () => {
-    const response = await api.get('/stats');
+    const response = await api.get('/api/stats');
     return response.data;
   },
 
   update: async data => {
-    const response = await api.post('/stats', data);
+    const response = await api.post('/api/stats', data);
     return response.data;
   },
 };
