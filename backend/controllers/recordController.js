@@ -18,22 +18,40 @@ const getRecords = async (req, res) => {
 // @access  Private
 const uploadRecord = async (req, res) => {
   try {
+    console.log('📁 Backend: Upload request received');
+    console.log('👤 User ID:', req.user?._id);
+    console.log('📄 File in request:', !!req.file);
+    console.log('📄 File details:', req.file ? {
+      originalname: req.file.originalname,
+      mimetype: req.file.mimetype,
+      size: req.file.size,
+      buffer: !!req.file.buffer
+    } : 'No file found');
+
     if (!req.file) {
+      console.log('❌ No file uploaded - req.file is undefined');
       return res.status(400).json({ message: 'Please upload a file' });
     }
 
+    console.log('☁️ Starting Cloudinary upload...');
     // Upload to Cloudinary
     const result = await new Promise((resolve, reject) => {
       const uploadStream = cloudinary.uploader.upload_stream(
         { resource_type: 'auto', folder: 'medicare_records' },
         (error, result) => {
-          if (error) reject(error);
-          else resolve(result);
+          if (error) {
+            console.error('❌ Cloudinary upload error:', error);
+            reject(error);
+          } else {
+            console.log('✅ Cloudinary upload successful:', result.secure_url);
+            resolve(result);
+          }
         }
       );
       uploadStream.end(req.file.buffer);
     });
 
+    console.log('💾 Creating database record...');
     const record = await MedicalRecord.create({
       userId: req.user._id,
       fileName: req.file.originalname,
@@ -42,8 +60,11 @@ const uploadRecord = async (req, res) => {
       cloudinaryId: result.public_id,
     });
 
+    console.log('✅ Record created successfully:', record._id);
     res.status(201).json(record);
   } catch (error) {
+    console.error('❌ Upload error:', error);
+    console.error('❌ Error stack:', error.stack);
     res.status(500).json({ message: error.message });
   }
 };

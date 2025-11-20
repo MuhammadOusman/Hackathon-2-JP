@@ -266,6 +266,14 @@ export const recordService = {
   },
 
   uploadRecord: async file => {
+    console.log('📁 Starting file upload process...');
+    console.log('📄 File details:', {
+      uri: file.uri,
+      type: file.type,
+      name: file.name,
+      size: file.fileSize || 'unknown'
+    });
+
     const formData = new FormData();
     formData.append('file', {
       uri: file.uri,
@@ -273,12 +281,22 @@ export const recordService = {
       name: file.name,
     });
 
-    const response = await api.post('/api/records/upload', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
-    return response.data;
+    console.log('📦 FormData created with file');
+
+    try {
+      console.log('🚀 Sending upload request to:', `${BASE_URL}/api/records/upload`);
+      const response = await api.post('/api/records/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      console.log('✅ Upload successful:', response.data);
+      return response.data;
+    } catch (error) {
+      console.error('❌ Upload failed:', error);
+      console.error('❌ Error response:', error.response?.data);
+      throw error;
+    }
   },
 
   upload: async file => {
