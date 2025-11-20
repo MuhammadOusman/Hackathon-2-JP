@@ -3,8 +3,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Dynamic API URL - temporarily force production URL for testing
 const getBaseUrl = () => {
-  // Use the latest Vercel deployment URL with debug logging
-  return 'https://hackathon-2-358826eqn-ousmans-projects-c8bfeb83.vercel.app'; // Latest Vercel URL with debug logs
+  // Use the latest Vercel deployment URL with heavy debugging
+  return 'https://hackathon-2-6f5vnj2pg-ousmans-projects-c8bfeb83.vercel.app'; // Latest Vercel URL with heavy debugging
 
   // Original logic (commented out for now):
   // if (__DEV__ === false) {

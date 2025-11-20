@@ -2,18 +2,18 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
-const connectDB = require('./config/db');
-const errorHandler = require('./middleware/errorHandler');
+const connectDB = require('./backend/config/db');
+const errorHandler = require('./backend/middleware/errorHandler');
 
 // Routes
-const authRoutes = require('./routes/authRoutes');
-const userRoutes = require('./routes/userRoutes');
-const providerRoutes = require('./routes/providerRoutes');
-const appointmentRoutes = require('./routes/appointmentRoutes');
-const medicationRoutes = require('./routes/medicationRoutes');
-const reminderRoutes = require('./routes/reminderRoutes');
-const recordRoutes = require('./routes/recordRoutes');
-const statsRoutes = require('./routes/statsRoutes');
+const authRoutes = require('./backend/routes/authRoutes');
+const userRoutes = require('./backend/routes/userRoutes');
+const providerRoutes = require('./backend/routes/providerRoutes');
+const appointmentRoutes = require('./backend/routes/appointmentRoutes');
+const medicationRoutes = require('./backend/routes/medicationRoutes');
+const reminderRoutes = require('./backend/routes/reminderRoutes');
+const recordRoutes = require('./backend/routes/recordRoutes');
+const statsRoutes = require('./backend/routes/statsRoutes');
 
 const app = express();
 
