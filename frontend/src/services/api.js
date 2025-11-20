@@ -1,9 +1,24 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// Update this to your computer's IP address when testing on physical device
-// Find your IP: ipconfig (Windows) or ifconfig (Mac/Linux)
-const BASE_URL = 'http://192.168.35.234:4000/api'; // Change to your IP
+// Dynamic API URL - works for both development and production
+const getBaseUrl = () => {
+  // For production (Vercel deployment)
+  if (__DEV__ === false) {
+    return 'https://medicare-backend-tau.vercel.app/api'; // Replace with your actual Vercel URL after deployment
+  }
+
+  // For development - try to auto-detect IP
+  try {
+    // This will be replaced with your actual IP during development
+    return 'http://192.168.100.30:4000/api'; // Current IP - update if it changes
+  } catch (error) {
+    // Fallback to localhost for emulator
+    return 'http://10.0.2.2:4000/api'; // Android emulator localhost
+  }
+};
+
+const BASE_URL = getBaseUrl();
 
 const api = axios.create({
   baseURL: BASE_URL,

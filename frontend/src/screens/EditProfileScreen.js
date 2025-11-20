@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
 import Avatar from '../components/Avatar';
-import {authService} from '../services/api';
+import {authService, userService} from '../services/api';
 import {colors, spacing} from '../theme';
 import Feather from 'react-native-vector-icons/Feather';
 
@@ -21,8 +21,6 @@ const EditProfileScreen = ({navigation}) => {
   const [user, setUser] = useState(null);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [address, setAddress] = useState('');
   const [avatar, setAvatar] = useState(null);
 
   useEffect(() => {
@@ -36,8 +34,6 @@ const EditProfileScreen = ({navigation}) => {
       setUser(currentUser);
       setName(currentUser.name || '');
       setEmail(currentUser.email || '');
-      setPhone(currentUser.phone || '');
-      setAddress(currentUser.address || '');
       setAvatar(currentUser.avatar || null);
     } catch (error) {
       Alert.alert('Error', 'Failed to load profile');
@@ -74,8 +70,7 @@ const EditProfileScreen = ({navigation}) => {
 
     try {
       setSaving(true);
-      // TODO: Implement API call to update profile
-      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulated delay
+      await userService.updateProfile(name, avatar);
       
       Alert.alert('Success', 'Profile updated successfully!', [
         {
@@ -84,6 +79,7 @@ const EditProfileScreen = ({navigation}) => {
         },
       ]);
     } catch (error) {
+      console.log('Profile update error:', error);
       Alert.alert('Error', 'Failed to update profile');
     } finally {
       setSaving(false);
@@ -164,37 +160,7 @@ const EditProfileScreen = ({navigation}) => {
           <Text style={styles.helpText}>Email cannot be changed</Text>
         </View>
 
-        <View style={styles.inputGroup}>
-          <Text style={styles.label}>Phone Number</Text>
-          <View style={styles.inputContainer}>
-            <Feather name="phone" size={20} color="#94A3B8" style={styles.inputIcon} />
-            <TextInput
-              style={styles.input}
-              placeholder="Enter your phone number"
-              placeholderTextColor="#94A3B8"
-              value={phone}
-              onChangeText={setPhone}
-              keyboardType="phone-pad"
-            />
-          </View>
-        </View>
 
-        <View style={styles.inputGroup}>
-          <Text style={styles.label}>Address</Text>
-          <View style={[styles.inputContainer, styles.textAreaContainer]}>
-            <Feather name="map-pin" size={20} color="#94A3B8" style={styles.inputIcon} />
-            <TextInput
-              style={[styles.input, styles.textArea]}
-              placeholder="Enter your address"
-              placeholderTextColor="#94A3B8"
-              value={address}
-              onChangeText={setAddress}
-              multiline
-              numberOfLines={3}
-              textAlignVertical="top"
-            />
-          </View>
-        </View>
       </View>
 
       {/* Save Button */}

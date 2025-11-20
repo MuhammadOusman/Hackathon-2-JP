@@ -29,6 +29,51 @@ node seedProviders.js
 npm run dev
 ```
 
+## 🚀 Deployment to Vercel
+
+### Prerequisites
+- Vercel account
+- MongoDB Atlas database
+- Cloudinary account (for image uploads)
+
+### Steps
+
+1. **Install Vercel CLI:**
+```bash
+npm install -g vercel
+```
+
+2. **Login to Vercel:**
+```bash
+vercel login
+```
+
+3. **Set Environment Variables:**
+```bash
+vercel env add MONGO_URI
+vercel env add CLOUDINARY_CLOUD_NAME
+vercel env add CLOUDINARY_API_KEY
+vercel env add CLOUDINARY_API_SECRET
+vercel env add JWT_SECRET
+```
+
+4. **Deploy:**
+```bash
+vercel --prod
+```
+
+Or use the deployment script:
+```bash
+chmod +x deploy.sh
+./deploy.sh
+```
+
+5. **Update Frontend:**
+After deployment, update the API URL in `frontend/src/services/api.js`:
+```javascript
+return 'https://your-vercel-app-name.vercel.app/api'; // Replace with actual URL
+```
+
 ## API Endpoints
 
 ### Auth
