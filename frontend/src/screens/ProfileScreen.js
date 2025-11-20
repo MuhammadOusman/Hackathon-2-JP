@@ -10,25 +10,60 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Avatar from '../components/Avatar';
 import {authService} from '../services/api';
+import {appointmentService, recordService, statsService} from '../services/api';
 import {colors, spacing} from '../theme';
 import Feather from 'react-native-vector-icons/Feather';
 import {useFocusEffect} from '@react-navigation/native';
 
 const ProfileScreen = ({navigation}) => {
   const [user, setUser] = useState(null);
+  const [stats, setStats] = useState({
+    appointments: 0,
+    records: 0,
+    healthScore: 0,
+  });
 
   useFocusEffect(
     useCallback(() => {
-      loadUser();
+      loadData();
     }, [])
   );
 
-  const loadUser = async () => {
+  const loadData = async () => {
     try {
+      // Load user data
       const currentUser = await authService.getCurrentUser();
       setUser(currentUser);
+
+      // Load stats data
+      await loadStats();
     } catch (error) {
       // Silently handle error
+    }
+  };
+
+  const loadStats = async () => {
+    try {
+      // Fetch appointments count
+      const appointments = await appointmentService.getAll();
+      const appointmentsCount = appointments.length;
+
+      // Fetch records count
+      const records = await recordService.getAll();
+      const recordsCount = records.length;
+
+      // Fetch health stats
+      const healthStats = await statsService.get();
+      const healthScore = healthStats?.overallScore || healthStats?.score || 0;
+
+      setStats({
+        appointments: appointmentsCount,
+        records: recordsCount,
+        healthScore: healthScore,
+      });
+    } catch (error) {
+      console.log('Error loading stats:', error);
+      // Keep default values if API fails
     }
   };
 
@@ -78,7 +113,7 @@ const ProfileScreen = ({navigation}) => {
           <View style={styles.statIconBg}>
             <Feather name="calendar" size={24} color="#07B4C8" />
           </View>
-          <Text style={styles.statValue}>12</Text>
+          <Text style={styles.statValue}>{stats.appointments}</Text>
           <Text style={styles.statLabel}>Appointments</Text>
         </View>
         
@@ -86,7 +121,7 @@ const ProfileScreen = ({navigation}) => {
           <View style={styles.statIconBg}>
             <Feather name="file-text" size={24} color="#8B5CF6" />
           </View>
-          <Text style={styles.statValue}>8</Text>
+          <Text style={styles.statValue}>{stats.records}</Text>
           <Text style={styles.statLabel}>Records</Text>
         </View>
         
@@ -94,7 +129,7 @@ const ProfileScreen = ({navigation}) => {
           <View style={styles.statIconBg}>
             <Feather name="activity" size={24} color="#34D399" />
           </View>
-          <Text style={styles.statValue}>95%</Text>
+          <Text style={styles.statValue}>{stats.healthScore}%</Text>
           <Text style={styles.statLabel}>Health Score</Text>
         </View>
       </View>
