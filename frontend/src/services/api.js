@@ -1,16 +1,10 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// Dynamic API URL - temporarily force production URL for testing
+// Dynamic API URL - now using production domain
 const getBaseUrl = () => {
-  // Use the latest Vercel deployment URL with fixed routing
-  return 'https://hackathon-2-6tn8ab4kn-ousmans-projects-c8bfeb83.vercel.app'; // Latest Vercel URL with routing fix
-
-  // Original logic (commented out for now):
-  // if (__DEV__ === false) {
-  //   return 'https://hackathon-2-jp.vercel.app'; // Clean production URL
-  // }
-  // return 'http://192.168.100.30:4000'; // Current IP - update if it changes
+  // Use the clean production URL
+  return 'https://hackathon-2-jp.vercel.app';
 };
 
 const BASE_URL = getBaseUrl();
