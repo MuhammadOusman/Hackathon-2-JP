@@ -393,7 +393,7 @@ This project is licensed under the MIT License.
 
 ## 📞 Support
 
-For support or questions, please contact the development team.
+For support or questions, please contact us at [ousman.me](https://ousman.me).
 
 ---
 

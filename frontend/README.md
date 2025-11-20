@@ -292,7 +292,7 @@ This project is licensed under the MIT License.
 
 For support, bug reports, or feature requests:
 - Create an issue on GitHub
-- Contact the development team
+- Contact us at [ousman.me](https://ousman.me)
 - Check the troubleshooting guide
 
 ## 🗺️ Roadmap
