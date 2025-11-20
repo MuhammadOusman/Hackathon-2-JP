@@ -3,8 +3,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Dynamic API URL - temporarily force production URL for testing
 const getBaseUrl = () => {
-  // Use the actual Vercel deployment URL
-  return 'https://hackathon-2-fp5drs571-ousmans-projects-c8bfeb83.vercel.app'; // Correct Vercel URL
+  // Use the latest Vercel deployment URL with debug logging
+  return 'https://hackathon-2-358826eqn-ousmans-projects-c8bfeb83.vercel.app'; // Latest Vercel URL with debug logs
 
   // Original logic (commented out for now):
   // if (__DEV__ === false) {
@@ -50,8 +50,60 @@ api.interceptors.response.use(
 // Auth Services
 export const authService = {
   register: async (name, email, password) => {
-    const response = await api.post('/auth/register', {name, email, password});
+    console.log('🔧 AuthService: Creating separate axios instance for registration');
+    console.log('🌐 Base URL:', BASE_URL);
+
+    // Use a separate axios instance without auth interceptor for registration
+    const authApi = axios.create({
+      baseURL: BASE_URL,
+      timeout: 10000,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    console.log('📡 Auth API instance created');
+    console.log('📤 Request data:', { name, email, password: '[HIDDEN]' });
+
+    // Add request interceptor to log headers
+    authApi.interceptors.request.use(
+      config => {
+        console.log('📨 Outgoing request headers:', config.headers);
+        console.log('📨 Request URL:', config.baseURL + config.url);
+        console.log('📨 Request method:', config.method);
+        return config;
+      },
+      error => {
+        console.log('❌ Request interceptor error:', error);
+        return Promise.reject(error);
+      }
+    );
+
+    // Add response interceptor to log response
+    authApi.interceptors.response.use(
+      response => {
+        console.log('📥 Response received:', {
+          status: response.status,
+          data: response.data
+        });
+        return response;
+      },
+      error => {
+        console.log('❌ Response error:', {
+          status: error.response?.status,
+          data: error.response?.data,
+          headers: error.response?.headers
+        });
+        return Promise.reject(error);
+      }
+    );
+
+    console.log('🚀 Making registration request...');
+    const response = await authApi.post('/auth/register', {name, email, password});
+
+    console.log('✅ Registration API call successful');
     if (response.data.token) {
+      console.log('💾 Storing token and user data');
       await AsyncStorage.setItem('token', response.data.token);
       await AsyncStorage.setItem('user', JSON.stringify(response.data));
     }
@@ -59,7 +111,16 @@ export const authService = {
   },
 
   login: async (email, password) => {
-    const response = await api.post('/auth/login', {email, password});
+    // Use a separate axios instance without auth interceptor for login
+    const authApi = axios.create({
+      baseURL: BASE_URL,
+      timeout: 10000,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const response = await authApi.post('/auth/login', {email, password});
     if (response.data.token) {
       await AsyncStorage.setItem('token', response.data.token);
       await AsyncStorage.setItem('user', JSON.stringify(response.data));

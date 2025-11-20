@@ -10,13 +10,20 @@ const generateToken = (id) => {
 // @route   POST /api/auth/register
 // @access  Public
 const register = async (req, res) => {
-  console.log('📝 Backend: Register request received for email:', req.body.email);
-  console.log('📝 Request body:', req.body);
+  console.log('📝 Backend: Register request received');
+  console.log('📧 Email:', req.body.email);
+  console.log('👤 Name:', req.body.name);
+  console.log('🔑 Password provided:', !!req.body.password);
+  console.log('📨 Request headers:', req.headers);
+  console.log('📨 Request method:', req.method);
+  console.log('� Request URL:', req.url);
+  console.log('📨 Full request body:', req.body);
+
   try {
     const { name, email, password } = req.body;
 
     if (!name || !email || !password) {
-      console.log('❌ Missing fields');
+      console.log('❌ Missing fields - name:', !!name, 'email:', !!email, 'password:', !!password);
       return res.status(400).json({ message: 'Please provide all fields' });
     }
 
@@ -28,7 +35,7 @@ const register = async (req, res) => {
 
     console.log('👤 Creating user...');
     const user = await User.create({ name, email, password });
-    console.log('✅ User created successfully');
+    console.log('✅ User created successfully with ID:', user._id);
 
     res.status(201).json({
       _id: user._id,
@@ -39,6 +46,7 @@ const register = async (req, res) => {
     });
   } catch (error) {
     console.error('❌ Register error:', error);
+    console.error('❌ Error stack:', error.stack);
     res.status(500).json({ message: error.message });
   }
 };

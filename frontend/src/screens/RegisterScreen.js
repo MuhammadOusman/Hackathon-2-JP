@@ -38,13 +38,38 @@ const RegisterScreen = ({navigation}) => {
     }
 
     setLoading(true);
-    console.log('Frontend: Sending register request for email:', email);
+    console.log('🚀 Frontend: Starting registration process');
+    console.log('📧 Email:', email);
+    console.log('👤 Name:', name);
+    console.log('🔑 Password length:', password.length);
+
     try {
-      await authService.register(name, email, password);
-      console.log('Frontend: Register successful');
+      console.log('📤 Frontend: Sending register request for email:', email);
+      console.log('🌐 API Base URL:', 'https://hackathon-2-358826eqn-ousmans-projects-c8bfeb83.vercel.app');
+      console.log('📡 Full URL:', 'https://hackathon-2-358826eqn-ousmans-projects-c8bfeb83.vercel.app/api/auth/register');
+
+      const response = await authService.register(name, email, password);
+
+      console.log('✅ Frontend: Register successful');
+      console.log('📦 Response data:', response);
+
       // Navigation will happen automatically through the auth check in navigation/index.js
     } catch (error) {
-      console.log('Frontend: Register failed with error:', error);
+      console.log('❌ Frontend: Register failed with error:', error);
+      console.log('🔍 Error details:', {
+        message: error.message,
+        status: error.response?.status,
+        statusText: error.response?.statusText,
+        data: error.response?.data,
+        headers: error.response?.headers,
+        config: {
+          url: error.config?.url,
+          method: error.config?.method,
+          headers: error.config?.headers,
+          data: error.config?.data
+        }
+      });
+
       Alert.alert('Registration Failed', error.response?.data?.message || 'Please try again');
     } finally {
       setLoading(false);
