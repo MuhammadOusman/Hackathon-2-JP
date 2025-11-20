@@ -274,14 +274,17 @@ export const recordService = {
       size: file.fileSize || 'unknown'
     });
 
+    // Ensure file has a name (React Native image picker might not provide one)
+    const fileName = file.name || file.uri.split('/').pop() || `upload_${Date.now()}.${file.type.split('/')[1]}`;
+
     const formData = new FormData();
     formData.append('file', {
       uri: file.uri,
       type: file.type,
-      name: file.name,
+      name: fileName,
     });
 
-    console.log('📦 FormData created with file');
+    console.log('📦 FormData created with file:', fileName);
 
     try {
       console.log('🚀 Sending upload request to:', `${BASE_URL}/api/records/upload`);
