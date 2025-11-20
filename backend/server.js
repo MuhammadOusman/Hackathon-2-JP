@@ -49,14 +49,19 @@ app.get('/debug', (req, res) => {
 // Global DB connection check for all API routes
 app.use('/api/*', async (req, res, next) => {
   try {
+    console.log('🔄 Checking DB connection for:', req.path);
     // Check if already connected
     if (mongoose.connection.readyState < 1) {
+      console.log('🔌 Connecting to DB...');
       await connectDB();
+      console.log('✅ DB Connected successfully');
+    } else {
+      console.log('✅ DB already connected');
     }
     next();
   } catch (error) {
-    console.error('DB Connection failed:', error);
-    return res.status(500).json({ message: 'Database connection failed' });
+    console.error('❌ DB Connection failed:', error);
+    return res.status(500).json({ message: 'Database connection failed', error: error.message });
   }
 });
 

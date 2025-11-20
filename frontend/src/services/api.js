@@ -1,21 +1,16 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// Dynamic API URL - works for both development and production
+// Dynamic API URL - temporarily force production URL for testing
 const getBaseUrl = () => {
-  // For production (Vercel deployment)
-  if (__DEV__ === false) {
-    return 'https://medicare-backend-tau.vercel.app/api'; // Replace with your actual Vercel URL after deployment
-  }
+  // Use the actual Vercel deployment URL
+  return 'https://hackathon-2-fp5drs571-ousmans-projects-c8bfeb83.vercel.app'; // Correct Vercel URL
 
-  // For development - try to auto-detect IP
-  try {
-    // This will be replaced with your actual IP during development
-    return 'http://192.168.100.30:4000/api'; // Current IP - update if it changes
-  } catch (error) {
-    // Fallback to localhost for emulator
-    return 'http://10.0.2.2:4000/api'; // Android emulator localhost
-  }
+  // Original logic (commented out for now):
+  // if (__DEV__ === false) {
+  //   return 'https://hackathon-2-jp.vercel.app'; // Clean production URL
+  // }
+  // return 'http://192.168.100.30:4000'; // Current IP - update if it changes
 };
 
 const BASE_URL = getBaseUrl();
